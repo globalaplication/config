@@ -28,6 +28,3 @@ class load(object):
         else:
             os.system("touch "+self.config)
         return "Yeni ayar kaydedildi."
-
-get = load("./config")
-print get.set("merhaba", "1")
