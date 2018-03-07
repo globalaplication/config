@@ -1,4 +1,4 @@
 import config <br>
-get = config.load("./config") <br>
-get.set("opacity", "50") <br>
-get.get("opacity")
+options = config.load("./config") <br>
+options.set("opacity", "50") <br>
+options.get("opacity")
