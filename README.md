@@ -1,4 +1,4 @@
 import config <br>
 get = config.load("./config") <br>
-get.set("timer", "1") <br>
-get.get("timer)
+get.set("opacity", "50") <br>
+get.get("opacity")
