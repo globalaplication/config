@@ -1,30 +1,26 @@
 import os
 class load(object):
-    def __init__(self, config):
-        self.config = config
-        with open(config) as r:
-            r = r.read()
-        self.source = r
-    def get(self, options):
-        c = open(self.config)
-        for test in c:
-            if test.strip("\n").startswith(options) is True:
-                get = test.split(",")[1].strip("\n")
-        return get
-    def set(self, key, value, string=""):
-        if os.path.exists(self.config) is True:
-            if self.source.find(key) is -1:
-                with open(self.config, "a") as a:
-                    a.write(string + key + "," + str(value) + "\n")
-            w = open(self.config)
-            for test in w:
-                test = test.strip("\n")
-                if test.strip("\n").startswith(key) is True:
-                    string = string + key + "," + str(value) + "\n"
-                    continue
-                string = string + test + "\n"
-            with open(self.config, "w") as w:
-                w.write(string)
-        else:
-            os.system("touch "+self.config)
-        return "Yeni ayar kaydedildi."
+    def __init__(self, file):
+        self.file = file
+        self.dict = {}
+        self.options = []
+        if os.path.exists(self.file) is False:
+            os.system("touch "+self.file)
+        re = open(self.file)
+        for test in re:
+            self.options.append(test.strip("\n").split(",")[0])
+    def get(self, key):
+        for options in open(self.file):
+            key = options.strip("\n").split(",")[0]
+            value = options.strip("\n").split(",")[1]
+            self.dict.update({key:value})
+        return self.dict[key]
+    def set(self, key, value):
+        key = str(key)
+        value = str(value)
+        if os.path.exists(self.file) is False:
+            os.system("touch "+self.file)
+        if key not in self.options:
+            with open(self.file, "a") as a:
+                a.write(key+","+value+"\n")
+        return 
