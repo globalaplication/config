@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+#!/usr/bin/env python
 import os
 class load(object):
     def __init__(self, file):
@@ -18,7 +20,7 @@ class load(object):
             if test.split(":")[0] == key:
                 value = test.split(":")[1].strip("\n")
         return value
-    def set(self, key, value):
+    def set(self, key, value): #merhaba
         key, value = str(key), str(value)
         string = ""
         if key not in self.keys:
@@ -32,4 +34,5 @@ class load(object):
                     string = string + "{}:{}\n".format(test, self.get(test))
             with open(self.file, "w") as save:
                 save.write(string)
-        
+
+
