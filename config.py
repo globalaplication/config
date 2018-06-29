@@ -2,38 +2,34 @@ import os
 class load(object):
     def __init__(self, file):
         self.file = file
-        self.dict = {}
-        self.options = []
-        if os.path.exists(self.file) is False:
-            os.system("touch "+self.file)
-        re = open(self.file)
-        for test in re:
-            self.options.append(test.strip("\n").split(",")[0])
+        self.keys = []
+        if os.path.exists(file) is False:
+            with open(file ,"w") as version:
+                version.write("version:0.1\n")
+        data = open(file)
+        for test in data:
+            self.keys.append(test.strip("\n").split(":")[0])
+        print (self.keys)
     def get(self, key):
-        if key not in self.options:
+        value = ""
+        if key not in self.keys:
             return "None"
-        for options in open(self.file):
-            key = options.strip("\n").split(",")[0]
-            value = options.strip("\n").split(",")[1]
-            self.dict.update({key:value})
-        return self.dict[key]
-    def set(self, key, value, string=""):
-        key = str(key)
-        value = str(value)
-        if os.path.exists(self.file) is False:
-            os.system("touch "+self.file)
-        if key not in self.options:
-            with open(self.file, "a") as a:
-                a.write(key+","+value+"\n")
-        if key in self.options:
-            for test in self.options:
+        for test in open(self.file):
+            if test.split(":")[0] == key:
+                value = test.split(":")[1].strip("\n")
+        return value
+    def set(self, key, value):
+        key, value = str(key), str(value)
+        string = ""
+        if key not in self.keys:
+            with open(self.file, "a") as add:
+                add.write("{}:{}\n".format(key, value))
+        else:
+            for test in self.keys:
                 if test == key:
-                    string = string + test + "," + value + "\n"
-                    continue
-                string = string + test + "," + self.get(test) + "\n"
-            with open(self.file, "w") as w:
-                w.write(string)
-        return 
-    
-    
-    
+                    string = string + "{}:{}\n".format(test, value)
+                else:
+                    string = string + "{}:{}\n".format(test, self.get(test))
+            with open(self.file, "w") as save:
+                save.write(string)
+        
